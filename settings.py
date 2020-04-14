@@ -17,4 +17,12 @@ MESSAGE_TEMPLATE = \
     記事のURLはこちらです。
     {url}'''
 
+MESSAGE_TEMPLATE_SHORT = \
+    '''{name}のホームページが更新されました。
+    
+    {title}
+    
+    {url}
+    '''
+
 CRAWLER_CLASSES: List[Type[CrawlerBase]] = get_all_crawler_classes()
