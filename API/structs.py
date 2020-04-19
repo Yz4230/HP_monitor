@@ -69,6 +69,26 @@ class TokenOptionsEnum(Enum):
 
 
 @dataclass
+class Discord:
+    """Discordのアクセストークンです。指定しなかった場合配信は行われません。""""
+    webhook_token: str
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Discord':
+        assert isinstance(obj, dict)
+        webhook_token = from_str(obj.get("webhook_token"))
+        return Discord(webhook_token)
+
+    def to_dict(self) -> dict:
+        result: dict = {"webhook_token": from_str(self.webhook_token)}
+        return result
+
+
+class TokenOptionsEnum(Enum):
+    USE_SHARED = "use_shared"
+
+
+@dataclass
 class Twitter:
     """Twitterのアクセストークンです。指定しなかった場合配信は行われません。"""
     access_token: str
