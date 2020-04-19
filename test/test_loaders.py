@@ -2,29 +2,15 @@ import json
 import os
 import random
 import unittest
+from typing import Type
 
 from faker import Faker
 
-from API.common import get_all_api_classes
+from API.common import get_all_api_classes, APIBase
 from const_settings import HISTORY_JSON_PATH, TOKENS_JSON_PATH
 from settings import load_tokens
 
 fake = Faker("ja-JP")
-
-
-def generate_fake_twitter_tokens():
-    return {
-        "consumer_key": fake.password(25),
-        "consumer_secret": fake.password(50),
-        "access_token": fake.password(50),
-        "access_token_secret": fake.password(45)
-    }
-
-
-def generate_fake_line_tokens():
-    return {
-        "channel_token": fake.password(172)
-    }
 
 
 class FileLoader(unittest.TestCase):
@@ -36,17 +22,16 @@ class FileLoader(unittest.TestCase):
     TEST_TOKENS_JSON_PATH = "test_tokens.json"
 
     def setUp(self) -> None:
-        test_tokens = {
-            "shared": {
-                "twitter": generate_fake_twitter_tokens(),
-                "line": generate_fake_line_tokens()
-            }
-        }
+        test_tokens = {"shared": {}}
+        for clazz in random.choices(get_all_api_classes()):
+            clazz: Type[APIBase]
+            test_tokens["shared"][clazz.JSON_KEY] = clazz().generate_fake_tokens(fake)
         for _ in range(50):
-            test_tokens[fake.company()] = {
-                "twitter": random.choice([None, "use_shared", generate_fake_twitter_tokens()]),
-                "line": random.choice([None, "use_shared", generate_fake_line_tokens()])
-            }
+            test_tokens[fake.company()] = {}
+            for clazz in random.choices(get_all_api_classes()):
+                clazz: Type[APIBase]
+                test_tokens["shared"][clazz.JSON_KEY] = \
+                    random.choice([None, "use_shared", clazz().generate_fake_tokens(fake)])
         with open(self.TEST_TOKENS_JSON_PATH, "w", encoding="utf-8") as wf:
             json.dump(test_tokens, wf, indent=4, ensure_ascii=False)
 
@@ -71,7 +56,7 @@ class FileLoader(unittest.TestCase):
 
         for clazz in get_all_api_classes():
             for school_name, tokens_set in test_tokens.items():
-                agent_tokens = tokens_set[clazz.JSON_KEY]
+                agent_tokens = tokens_set.get(clazz.JSON_KEY, None)
                 if agent_tokens == "use_shared":
                     self.assertEqual(clazz().get_agent_tokens(school_name, test_tokens),
                                      shared_tokens[clazz.JSON_KEY])
