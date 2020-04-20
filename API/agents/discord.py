@@ -19,13 +19,12 @@ class DiscordAPI(APIBase):
         rendered_text = render_text_default(news, school_name)
         api_base_url = "https://discordapp.com/api/webhooks/"
 
-
-
         payload = {
             "content": rendered_text
         }
 
         api_uri = api_base_url + discord_tokens["webhook_token"]
+
 
         requests.post(api_uri, 
         json=payload
