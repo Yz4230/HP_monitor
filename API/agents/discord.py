@@ -30,7 +30,7 @@ class DiscordAPI(APIBase):
         }
         """
 
-        api_uri = api_base_url + discord_tokens.webhook_token,
+        api_uri = api_base_url + discord_tokens.webhook_token
 
         requests.post(api_url, 
         rendered_text 
