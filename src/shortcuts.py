@@ -5,11 +5,11 @@ from logging import getLogger
 from typing import List, Type, Dict
 
 from API.common import get_all_api_classes
-from const_settings import MESSAGE_TEMPLATE, MAX_WORKERS
 from crawlers.common import get_all_crawler_classes, CrawlerBase
-from custom_types import News
-from settings import TOKEN_TABLE
-from utils import load_history, save_history, wrap_one_arg
+from src.const_settings import MESSAGE_TEMPLATE, MAX_WORKERS
+from src.custom_types import News
+from src.settings import TOKEN_TABLE
+from src.utils import load_history, save_history, wrap_one_arg
 
 
 @wrap_one_arg

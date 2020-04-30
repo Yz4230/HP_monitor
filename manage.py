@@ -4,8 +4,8 @@ import sys
 import time
 from typing import Callable, Dict, Tuple
 
-from const_settings import HISTORY_JSON_PATH
-from utils import save_json_default
+from src.const_settings import HISTORY_JSON_PATH
+from src.utils import save_json_default
 
 ACTION_TO_FUNC: Dict[str, Tuple[Callable, Tuple[str]]] = {}
 
@@ -20,7 +20,7 @@ def command_action(command_name: str, *expected_args: str) -> Callable[[Callable
 
 @command_action("init")
 def init():
-    from shortcuts import check_update
+    from src.shortcuts import check_update
     save_json_default({}, HISTORY_JSON_PATH)
     news = check_update()
     print(f"{len(news)} news were cached.")
@@ -48,7 +48,7 @@ def sites():
 
 @command_action("history")
 def history():
-    from utils import load_history
+    from src.utils import load_history
     cached_history = load_history()
     print(f"There are {len(cached_history)} sites.")
     for site, cache in cached_history.items():
@@ -57,7 +57,7 @@ def history():
 
 @command_action("run-once")
 def run_once():
-    from shortcuts import check_update, broadcast_all
+    from src.shortcuts import check_update, broadcast_all
 
     for news in check_update():
         broadcast_all(news)
@@ -65,7 +65,7 @@ def run_once():
 
 @command_action("monitor", "interval")
 def monitor(interval: int):
-    from shortcuts import check_update, broadcast_all
+    from src.shortcuts import check_update, broadcast_all
 
     while True:
         for news in check_update():

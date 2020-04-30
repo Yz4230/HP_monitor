@@ -5,7 +5,7 @@ import bs4
 import requests
 
 from crawlers.common import CrawlerBase
-from custom_types import NewsHeader
+from src.custom_types import NewsHeader
 
 
 class UtsunomiyaJoshi(CrawlerBase):

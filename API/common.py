@@ -5,9 +5,9 @@ from typing import Callable, List, Type, cast, Optional
 
 from faker import Faker
 
-from custom_types import News, Singleton, TokenDict
-from settings import TOKEN_TABLE
-from utils import get_all_classes_from_package
+from src.custom_types import News, Singleton, TokenDict
+from src.settings import TOKEN_TABLE
+from src.utils import get_all_classes_from_package
 
 
 class APIBase(Singleton, metaclass=ABCMeta):

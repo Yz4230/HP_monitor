@@ -14,8 +14,8 @@ from typing import List, Type, Optional, Callable, cast, TextIO
 
 import jaconv
 
-from const_settings import HISTORY_JSON_PATH
-from custom_types import History
+from src.const_settings import HISTORY_JSON_PATH
+from src.custom_types import History
 
 
 def get_all_classes_from_package(pkg_path: str, filter_func: Optional[Callable[[Type], bool]] = None) -> List[Type]:

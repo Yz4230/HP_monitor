@@ -2,8 +2,8 @@ import unittest
 
 from faker import Faker
 
-from custom_types import News
 from API.agents.twitter import render_twitter_text
+from src.custom_types import News
 
 fake = Faker("ja-JP")
 

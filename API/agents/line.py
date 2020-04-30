@@ -2,8 +2,8 @@ import requests
 from faker import Faker
 
 from API.common import APIBase
-from custom_types import News, TokenDict
-from shortcuts import render_text_default
+from src.custom_types import News, TokenDict
+from src.shortcuts import render_text_default
 
 
 class LineAPI(APIBase):

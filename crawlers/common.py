@@ -2,8 +2,8 @@ from abc import ABCMeta, abstractmethod
 from functools import lru_cache
 from typing import List, Type, cast
 
-from custom_types import NewsHeader, News
-from utils import get_all_classes_from_package, pretty_text
+from src.custom_types import NewsHeader, News
+from src.utils import get_all_classes_from_package, pretty_text
 
 
 class CrawlerBase(metaclass=ABCMeta):

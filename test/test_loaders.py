@@ -2,8 +2,8 @@ import unittest
 
 from faker import Faker
 
-from const_settings import HISTORY_JSON_PATH, TOKENS_JSON_PATH
-from utils import load_json_default
+from src.const_settings import HISTORY_JSON_PATH, TOKENS_JSON_PATH
+from src.utils import load_json_default
 
 fake = Faker("ja-JP")
 
