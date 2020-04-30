@@ -91,7 +91,7 @@ def str_clamp(value: str, max_length: int) -> str:
 
 
 def str_clamp_bytes(value: str, max_bytes: int) -> str:
-    byte_count = list(map(lambda s: len(s.encode('utf-8')), value))
+    byte_count = (len(s.encode("utf-8")) for s in value)
     try:
         end_slice = next(i for i, v in enumerate(accumulate(byte_count)) if v > max_bytes)
     except StopIteration:
