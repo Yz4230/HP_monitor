@@ -3,7 +3,7 @@ This module should not depend on anything other than standard modules.
 このモジュールは、標準モジュール以外に依存してはいけません。
 """
 from dataclasses import dataclass
-from typing import Dict, Union, Optional, List
+from typing import Dict, Union, Optional, Set
 
 TokenDict = Dict[str, str]
 
@@ -13,7 +13,7 @@ TokenSet = Dict[str, ApiTokens]
 
 TokenTable = Dict[str, TokenSet]
 
-History = Dict[str, List[str]]
+History = Dict[str, Set[str]]
 
 
 @dataclass

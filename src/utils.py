@@ -66,16 +66,20 @@ def initialize_logger() -> None:
 def load_history(path=HISTORY_JSON_PATH) -> History:
     logger = getLogger(load_history.__qualname__)
     history = cast(History, load_json_default(path))
-    for caches in history.values():
-        if len(caches) == 0:
+    for key, hashes in history.items():
+        if len(hashes) == 0:
             raise ValueError("A suspicious history has been detected.")
+        history[key] = set(hashes)
     logger.debug(f"'{HISTORY_JSON_PATH}' has loaded successfully!")
     return history
 
 
 def save_history(obj: History, path=HISTORY_JSON_PATH) -> None:
     logger = getLogger(save_history.__qualname__)
-    save_json_default(obj, path)
+    obj_listed = {}
+    for key, hashes in obj.items():
+        obj_listed[key] = list(hashes)
+    save_json_default(obj_listed, path)
     logger.debug(f"'{HISTORY_JSON_PATH}' has saved successfully!")
 
 

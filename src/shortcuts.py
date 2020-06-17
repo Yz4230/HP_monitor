@@ -2,18 +2,18 @@ import time
 from concurrent.futures.thread import ThreadPoolExecutor
 from dataclasses import asdict
 from logging import getLogger
-from typing import List, Type, Dict
+from typing import List, Type
 
 from API.common import get_all_api_classes
 from crawlers.common import get_all_crawler_classes, CrawlerBase
 from src.const_settings import MESSAGE_TEMPLATE, MAX_WORKERS
-from src.custom_types import News
+from src.custom_types import News, History
 from src.settings import TOKEN_TABLE
 from src.utils import load_history, save_history, wrap_one_arg
 
 
 @wrap_one_arg
-def crawl_news_with_class(clazz: Type[CrawlerBase], history: Dict[str, List[str]]) -> List[News]:
+def crawl_news_with_class(clazz: Type[CrawlerBase], history: History) -> List[News]:
     logger = getLogger(clazz.__qualname__)
     hashes = history.get(clazz.SITE_NAME, [])
 
@@ -27,7 +27,7 @@ def crawl_news_with_class(clazz: Type[CrawlerBase], history: Dict[str, List[str]
     elapsed = time.time() - start_time
     logger.info(f"Crawled {len(latest_news)} news in {round(elapsed, 2)} seconds.")
 
-    history[clazz.SITE_NAME] = hashes + [x.hash for x in latest_news]
+    history[clazz.SITE_NAME] = hashes | {x.hash for x in latest_news}
     return latest_news
 
 
